@@ -1,0 +1,8 @@
+[Settings]
+; 1-based index into DpiSteps (2 = 800 DPI below)
+DpiIndex=2
+DpiSteps=400,800,1200,1600,2400,3200
+; Side buttons only — never add LButton or RButton
+DpiHotkeys=XButton1,XButton2,MButton
+PopupMs=1800
+AlwaysShowHud=true
