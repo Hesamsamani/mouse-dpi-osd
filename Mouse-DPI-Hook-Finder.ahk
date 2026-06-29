@@ -7,13 +7,13 @@ global LastBtn := ""
 global hHook := 0
 global HookProc := 0
 
-gui := Gui("+AlwaysOnTop", "DPI Button Detector")
-gui.SetFont("s10", "Segoe UI")
-gui.Add("Text", "w440", "Press your DEDICATED DPI button below.`nDo NOT use left click, right click, or scroll wheel click.")
-list := gui.Add("ListBox", "w440 h220")
-gui.Add("Button", "w440", "Save detected button & restart OSD").OnEvent("Click", SaveAndRestart)
-gui.Add("Text", "w440 cGray", "If nothing appears when you press DPI, that button is hardware-only (see README).")
-gui.Show()
+DetectorGui := Gui("+AlwaysOnTop", "DPI Button Detector")
+DetectorGui.SetFont("s10", "Segoe UI")
+DetectorGui.Add("Text", "w440", "Press your DEDICATED DPI button below.`nDo NOT use left click, right click, or scroll wheel click.")
+list := DetectorGui.Add("ListBox", "w440 h220")
+DetectorGui.Add("Button", "w440", "Save detected button & restart OSD").OnEvent("Click", SaveAndRestart)
+DetectorGui.Add("Text", "w440 cGray", "If nothing appears when you press DPI, that button is hardware-only (see README).")
+DetectorGui.Show()
 
 HookProc := CallbackCreate(MouseLLHook, "F", 4)
 hHook := DllCall("SetWindowsHookEx", "Int", 14, "Ptr", HookProc, "Ptr", 0, "UInt", 0, "Ptr")
