@@ -41,8 +41,8 @@ powershell -ExecutionPolicy Bypass -File .\Install-Mouse-DPI-OSD.ps1
 ## First-time setup
 
 1. Run **Mouse DPI OSD** (tray icon appears)
-2. Tray menu → **Button finder** → press your **DPI button** once  
-   - If detected (e.g. `XButton1`), restart OSD from tray  
+2. Tray menu → **Map DPI button** → press your **dedicated DPI button** (not middle click)  
+   - Click **Save detected button** — only that button is bound  
    - If nothing appears, DPI is hardware-only — set `DpiIndex` manually in config
 3. Edit `dpi-osd-config.ini`:
    - `DpiSteps` — match your mouse’s DPI levels

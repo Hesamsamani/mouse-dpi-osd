@@ -1,8 +1,9 @@
-; Mouse DPI OSD — on-screen DPI display for generic / OEM mice (no manufacturer software)
+; Mouse DPI OSD — generic / Yichip mice (auto-configured)
 #Requires AutoHotkey v2.0
 #SingleInstance Force
 
 ConfigIni := A_ScriptDir "\dpi-osd-config.ini"
+; Never hook these — they break normal mouse use
 global BlockedHotkeys := Map("LButton", 1, "RButton", 1, "WheelUp", 1, "WheelDown", 1)
 global DpiSteps := [400, 800, 1200, 1600, 2400, 3200]
 global DpiHotkeys := ["XButton1", "XButton2", "MButton"]
@@ -76,6 +77,7 @@ SaveConfig() {
 RegisterHotkeys() {
     global DpiHotkeys
     for hk in DpiHotkeys {
+        ; ~ = do not block the button — clicks still work normally
         try Hotkey("~" hk, CycleDpi, "On")
     }
 }
@@ -104,7 +106,7 @@ InitTray() {
     Tray.Delete()
     Tray.Add("DPI: " CurrentDpi(), (*) => "")
     Tray.Add("Test popup", (*) => ShowPopup(CurrentDpi()))
-    Tray.Add("Button finder", (*) => Run('"' A_AhkPath '" "' A_ScriptDir '\Mouse-DPI-Button-Finder.ahk"'))
+    Tray.Add("Map DPI button", (*) => Run('"' A_AhkPath '" "' A_ScriptDir '\Mouse-DPI-Hook-Finder.ahk"'))
     Tray.Add("Edit settings", (*) => Run('notepad.exe "' ConfigIni '"'))
     Tray.Add("Exit", (*) => ExitApp())
 }
@@ -127,6 +129,7 @@ ShowPopup(dpi) {
     if (IsObject(PopupGui))
         try PopupGui.Destroy()
 
+    ; Compact pill — tight padding, dark glass, readable white label
     panel := "1E1E1E"
     PopupGui := Gui("+AlwaysOnTop -Caption +ToolWindow +E0x20")
     PopupGui.BackColor := panel
@@ -135,6 +138,7 @@ ShowPopup(dpi) {
     PopupGui.SetFont("s18 norm cFFFFFF", "Segoe UI")
     PopupGui.Add("Text", "Center Background" panel " cFFFFFF", dpi " DPI")
     PopupGui.Show("AutoSize Center NoActivate")
+    ; Whole-window alpha: text stays crisp on dark panel; 128 ≈ 50% see-through
     try WinSetTransparent(128, PopupGui)
     SetTimer(HidePopup, -PopupMs)
 }
